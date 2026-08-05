@@ -3,7 +3,7 @@ ____________________________________
 Name: ARCustom
 Description: 
 Owner:Telefónica Móviles Argentina
-Created by: nombre.apellido@Tmoviles.com.ar 
+Created by: Operaciones de Ciberseguridad
 Status
 Risk : (Critical Risk, High Risk, Medium Risk, Low Risk, Unknown)
 MITRE ATT&CK
