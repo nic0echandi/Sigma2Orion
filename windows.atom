@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:/SigmaHQ/sigma/commits/master/rules/windows</id>
+  <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commits/master/rules/windows"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/SigmaHQ/sigma/commits/master/rules/windows.atom"/>
+  <title>Recent Commits to sigma:master</title>
+  <updated>2026-08-05T08:52:16Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/8eaafff1f2845a696050e05e72ba1140ee190698</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/8eaafff1f2845a696050e05e72ba1140ee190698"/>
+    <title>
+        Merge PR #6190 from @swachchhanda000 - Add CertiGhost Rules
+    </title>
+    <updated>2026-08-05T08:52:16Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6190 from @swachchhanda000 - Add CertiGhost Rules
+
+new: ADCS - Certificate Request With CDC Chase Attribute
+new: ADCS - Certificate Issued via CDC Chase Mechanism
+new: Certificate Services Outbound SMB or LDAP Connection
+new: DC Machine Account TGT Request from Non-DC Source IP
+new: DC Machine Account TGS Request from Non-DC Source IP
+new: DC Machine Account Network Logon from Non-DC Source IP&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/226e0f811b44c0e023bbe6799762e29864ebdb92</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/226e0f811b44c0e023bbe6799762e29864ebdb92"/>
+    <title>
+        Merge PR #6167 from @chrialonso - Fix Typo In `Suspicious Microsoft O…
+    </title>
+    <updated>2026-08-03T08:36:05Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/237105747?s=30&amp;v=4"/>
+    <author>
+      <name>chrialonso</name>
+      <uri>https://github.com/chrialonso</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6167 from @chrialonso - Fix Typo In `Suspicious Microsoft Office Child Process`
+
+chore: Suspicious Microsoft Office Child Process - fix typo in related field comment&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/8512ed848c63b7961a34e36f73192608156db73a</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/8512ed848c63b7961a34e36f73192608156db73a"/>
+    <title>
+        Merge PR #6169 from @swachchhanda000 - Add LegacyHive Indicators
+    </title>
+    <updated>2026-08-03T08:35:04Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6169 from @swachchhanda000 - Add LegacyHive Indicators
+
+new: Potentially Suspicious Explicit Credential Local Logon
+new: Registry Hive File Staged Outside Standard User Profile Path
+new: Potentially Suspicious Image Load of Offreg.dll
+new: Suspicious Cross-User Process Spawn&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/1aacbedf7fc04067e6b1b2594c4b7c1c2ff649a9</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/1aacbedf7fc04067e6b1b2594c4b7c1c2ff649a9"/>
+    <title>
+        Merge PR #5989 from @swachchhanda000 - Reduce false positives across …
+    </title>
+    <updated>2026-07-28T08:16:18Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5989 from @swachchhanda000 - Reduce false positives across multiple Windows rules
+
+fix: Credential Manager Access By Uncommon Applications - add explorer.exe exclusion, align filter naming to filter_main_* convention
+fix: Access To Windows DPAPI Master Keys By Uncommon Applications - add explorer.exe exclusion, align filter naming to filter_main_* convention
+fix: Files With System Process Name In Unsuspected Locations - add filter_optional_wslhost to exclude legitimate WSL binary paths
+fix: PSScriptPolicyTest Creation By Uncommon Process - add filter_optional_gethelp for Microsoft.GetHelp WindowsApp
+fix: Load Of RstrtMgr.DLL By An Uncommon Process - fix missing quotes on path values, split OneDrive filter to cover OneDrive.Sync.Service.exe
+fix: PowerShell Core DLL Loaded By Non PowerShell Process - add filter_optional_gethelp for Microsoft.GetHelp WindowsApp
+fix: Suspicious WSMAN Provider Image Loads - add filter_gethelp for Microsoft.GetHelp WindowsApp
+fix: Msiexec Quiet Installation - add filter_optional_wsl for WSL-triggered installs, align filter naming to filter_main_* and filter_optional_* convention
+fix: System File Execution Location Anomaly - fix missing quotes on path values&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/1f457bbe9794ca915d5c02fe2249c8dc1f2bdad7</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/1f457bbe9794ca915d5c02fe2249c8dc1f2bdad7"/>
+    <title>
+        Merge PR #6175 from @chrialonso - Update `Network Communication With …
+    </title>
+    <updated>2026-07-27T16:33:37Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/237105747?s=30&amp;v=4"/>
+    <author>
+      <name>chrialonso</name>
+      <uri>https://github.com/chrialonso</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6175 from @chrialonso - Update `Network Communication With Crypto Mining Pool`
+
+update: Network Communication With Crypto Mining Pool - Split merged crypto pool domains and add 87 new entries from Maltrail
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/5f5d4b7457a11cc46c874cb5f1a65a88fa999f6c</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/5f5d4b7457a11cc46c874cb5f1a65a88fa999f6c"/>
+    <title>
+        Merge PR #6158 from @swachchhanda000 - Fix `Rundll32 UNC Path Execution`
+    </title>
+    <updated>2026-07-27T16:16:46Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6158 from @swachchhanda000 - Fix `Rundll32 UNC Path Execution`
+
+fix: Rundll32 UNC Path Execution - rundll32 UNC path mismatch with pipename&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/5e969bc529d1bca15d33f4ded100290a2a1a6f4c</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/5e969bc529d1bca15d33f4ded100290a2a1a6f4c"/>
+    <title>
+        Merge PR #6171 from @gregorywychowaniec-zt - Add French error descrip…
+    </title>
+    <updated>2026-07-24T08:18:26Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/123754019?s=30&amp;v=4"/>
+    <author>
+      <name>gregorywychowaniec-zt</name>
+      <uri>https://github.com/gregorywychowaniec-zt</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6171 from @gregorywychowaniec-zt - Add French error description in Sysmon Configuration Error
+
+update: Sysmon Configuration Error - add French error description&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/65b39fa48afc2739ed01df03ef61c68be995bb36</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/65b39fa48afc2739ed01df03ef61c68be995bb36"/>
+    <title>
+        Merge PR #6131 from @Bit-ByteBandit - Update `Webshell Detection With…
+    </title>
+    <updated>2026-07-14T10:19:43Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/134239703?s=30&amp;v=4"/>
+    <author>
+      <name>Bit-ByteBandit</name>
+      <uri>https://github.com/Bit-ByteBandit</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6131 from @Bit-ByteBandit - Update `Webshell Detection With Command Line Keywords`
+
+update: Webshell Detection With Command Line Keywords - Remove invalid ver.exe binary matches
+
+---------
+
+Co-authored-by: Nasreddine Bencherchali &amp;lt;nbencher@cisco.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/282369fa76c5cd6103b055478fbaebec8530cfa5</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/282369fa76c5cd6103b055478fbaebec8530cfa5"/>
+    <title>
+        Merge PR #6125 from @EzLucky - Fix `Potential System DLL Sideloading …
+    </title>
+    <updated>2026-07-10T13:56:18Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/15970015?s=30&amp;v=4"/>
+    <author>
+      <name>EzLucky</name>
+      <uri>https://github.com/EzLucky</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6125 from @EzLucky - Fix `Potential System DLL Sideloading From Non System Locations`
+
+fix: Potential System DLL Sideloading From Non System Locations - Add new filter for SystemSettings.dll as well as fix broken Fieldname
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/f1bc2fcad6583c832e3b0dd52326da2a13379103</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/f1bc2fcad6583c832e3b0dd52326da2a13379103"/>
+    <title>
+        Merge PR #5894 from @heyyanu - Add `AppLocker Application Would Have …
+    </title>
+    <updated>2026-07-09T14:02:19Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/227098485?s=30&amp;v=4"/>
+    <author>
+      <name>heyyanu</name>
+      <uri>https://github.com/heyyanu</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5894 from @heyyanu - Add `AppLocker Application Would Have Been Blocked`
+
+new: AppLocker Application Would Have Been Blocked
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/ce5c196cf19232cb0d2dd586a314e26b0a3fd711</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/ce5c196cf19232cb0d2dd586a314e26b0a3fd711"/>
+    <title>
+        Merge PR #6100 from @swachchhanda000 - Update and Add WMI operation r…
+    </title>
+    <updated>2026-07-08T23:25:57Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6100 from @swachchhanda000 - Update and Add WMI operation related rules
+
+new: Failed Event Log Clear Via WMI NTEventLogFile ClearEventLog
+update: System File Execution Location Anomaly - add wmic.exe for increased coverage
+---------
+
+Co-authored-by: Nasreddine Bencherchali &amp;lt;monsteroffire2@gmail.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/fe2a6e82acc831a9a49f8f2261c127d50a1db306</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/fe2a6e82acc831a9a49f8f2261c127d50a1db306"/>
+    <title>
+        Merge PR #6114 from @munzzyy - Fix `Execution Of Non-Existing File`
+    </title>
+    <updated>2026-07-06T15:45:55Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/145523609?s=30&amp;v=4"/>
+    <author>
+      <name>munzzyy</name>
+      <uri>https://github.com/munzzyy</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6114 from @munzzyy - Fix `Execution Of Non-Existing File`
+
+fix: Execution Of Non-Existing File - add vmmemWSL exception
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/d3e9461ea380263e2a3329a9f74dec8633d50474</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/d3e9461ea380263e2a3329a9f74dec8633d50474"/>
+    <title>
+        Merge PR #6021 from @eriknordstrm - Add `Suspicious Start-Process Pas…
+    </title>
+    <updated>2026-07-03T12:35:34Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/123909255?s=30&amp;v=4"/>
+    <author>
+      <name>eriknordstrm</name>
+      <uri>https://github.com/eriknordstrm</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6021 from @eriknordstrm - Add `Suspicious Start-Process PassThru`
+
+update: Suspicious Start-Process PassThru - Added the alias `saps` for increased coverage&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/941c27449146f1afb95f2ea36b2b4528d988dfbe</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/941c27449146f1afb95f2ea36b2b4528d988dfbe"/>
+    <title>
+        Merge PR #6048 from @kurisukun - Remove Incorrect Reference
+    </title>
+    <updated>2026-07-01T11:46:08Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/35377340?s=30&amp;v=4"/>
+    <author>
+      <name>kurisukun</name>
+      <uri>https://github.com/kurisukun</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6048 from @kurisukun - Remove Incorrect Reference
+
+chore: remove incorrect reference link
+
+---------
+
+Co-authored-by: Chris Barros &amp;lt;chris.barros@spcs.ch&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/04b7cece9de37eeea541d3ac7219020f089608dd</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/04b7cece9de37eeea541d3ac7219020f089608dd"/>
+    <title>
+        Merge PR #5962 from @AJ-Jeffreys - Update `Potential WinAPI Calls Via…
+    </title>
+    <updated>2026-07-01T11:44:10Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/151383894?s=30&amp;v=4"/>
+    <author>
+      <name>AJ-Jeffreys</name>
+      <uri>https://github.com/AJ-Jeffreys</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5962 from @AJ-Jeffreys - Update `Potential WinAPI Calls Via PowerShell Scripts`
+
+update: Potential WinAPI Calls Via PowerShell Scripts - add local shellcode injection patterns
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/0d5b0cc26852f32842a745f18bbce23bd6ceaab1</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/0d5b0cc26852f32842a745f18bbce23bd6ceaab1"/>
+    <title>
+        Merge PR #5855 from @marcopedrinazzi - Add `New Agent Skills Installa…
+    </title>
+    <updated>2026-07-01T11:06:18Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/19775134?s=30&amp;v=4"/>
+    <author>
+      <name>marcopedrinazzi</name>
+      <uri>https://github.com/marcopedrinazzi</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5855 from @marcopedrinazzi - Add `New Agent Skills Installation Attempt Via Node.EXE`
+
+new: New Agent Skills Installation Attempt Via Node.EXE
+
+---------
+
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;
+Co-authored-by: Nasreddine Bencherchali &amp;lt;monsteroffire2@gmail.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/795b06e298233fd0c2f08d449fa581b36110ad9f</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/795b06e298233fd0c2f08d449fa581b36110ad9f"/>
+    <title>
+        Merge PR #6007 from @swachchhanda000 - Eexpand LOLBIN file-drop detec…
+    </title>
+    <updated>2026-07-01T09:54:20Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6007 from @swachchhanda000 - Eexpand LOLBIN file-drop detection coverage
+
+update: Legitimate Application Dropped Executable - add .pyc, .jar extensions
+update: Legitimate Application Dropped Script - add various scripts extensions&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/1395a49a3c8ba2ffe47be922eb4d98d9241351ce</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/1395a49a3c8ba2ffe47be922eb4d98d9241351ce"/>
+    <title>
+        Merge PR #5911 from @CHIRAG-DAMANI-08 - Add `Windows Defender Disable…
+    </title>
+    <updated>2026-07-01T09:44:17Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/150421833?s=30&amp;v=4"/>
+    <author>
+      <name>CHIRAG-DAMANI-08</name>
+      <uri>https://github.com/CHIRAG-DAMANI-08</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5911 from @CHIRAG-DAMANI-08 - Add `Windows Defender Disabled Via SystemSettingsAdminFlows.EXE`
+
+new: Windows Defender Disabled Via SystemSettingsAdminFlows.EXE
+
+
+---------
+
+Co-authored-by: EzLucky &amp;lt;EzLucky@users.noreply.github.com&amp;gt;
+Co-authored-by: Swachchhanda Shrawan Poudel &amp;lt;87493836+swachchhanda000@users.noreply.github.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/26d425f5265434c22712d21e284430e3c9559f34</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/26d425f5265434c22712d21e284430e3c9559f34"/>
+    <title>
+        Merge PR #6090 from @einlamye - Add ARM64 variants for Sysinternals b…
+    </title>
+    <updated>2026-07-01T09:29:43Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/147882318?s=30&amp;v=4"/>
+    <author>
+      <name>einlamye</name>
+      <uri>https://github.com/einlamye</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #6090 from @einlamye - Add ARM64 variants for Sysinternals based rules
+
+update: Amsi.DLL Load By Uncommon Process - add ARM64 (*64a.exe) variant
+update: WMI Module Loaded By Uncommon Process - add ARM64 (*64a.exe) variant
+update: Potentially Suspicious AccessMask Requested From LSASS - add ARM64 (*64a.exe) variant
+update: Potential Privileged System Service Operation - SeLoadDriverPrivilege - add ARM64 (*64a.exe) variant
+update: Suspicious PROCEXP152.sys File Created In TMP - add ARM64 (*64a.exe) variant
+update: Process Explorer Driver Creation By Non-Sysinternals Binary - add ARM64 (*64a.exe) variant
+update: Process Monitor Driver Creation By Non-Sysinternals Binary - add ARM64 (*64a.exe) variant
+update: CredUI.DLL Loaded By Uncommon Process - add ARM64 (*64a.exe) variant
+update: HackTool - SysmonEnte Execution - add ARM64 (*64a.exe) variant
+update: Potential Credential Dumping Activity Via LSASS - add ARM64 (*64a.exe) variant
+update: Potentially Suspicious GrantedAccess Flags On LSASS - add ARM64 (*64a.exe) variant
+update: Potential Defense Evasion Via Rename Of Highly Relevant Binaries - add ARM64 (*64a.exe) variant
+update: Renamed ProcDump Execution - add ARM64 (*64a.exe) variant
+update: Renamed Sysinternals Sdelete Execution - add ARM64 (*64a.exe) variant
+update: Permission Check Via Accesschk.EXE - add ARM64 (*64a.exe) variant
+update: Procdump Execution - add ARM64 (*64a.exe) variant
+update: Suspicious Use of PsLogList - add ARM64 (*64a.exe) variant
+update: Sysinternals PsService Execution - add ARM64 (*64a.exe) variant
+update: Sysinternals PsSuspend Execution - add ARM64 (*64a.exe) variant
+update: Sysinternals PsSuspend Suspicious Execution - add ARM64 (*64a.exe) variant
+update: Sysmon Configuration Update - add ARM64 (*64a.exe) variant
+update: Uninstall Sysinternals Sysmon - add ARM64 (*64a.exe) variant
+update: Suspicious Execution Of Renamed Sysinternals Tools - Registry - add ARM64 (*64a.exe) variant
+update: Usage of Renamed Sysinternals Tools - RegistrySet - add ARM64 (*64a.exe) variant
+update: Suspicious Service Installed - add ARM64 (*64a.exe) variant&lt;/pre&gt;
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/32f6338a00a149322d2a5b31a2e7fa98d356d055</id>
+    <link type="text/html" rel="alternate" href="https://github.com/SigmaHQ/sigma/commit/32f6338a00a149322d2a5b31a2e7fa98d356d055"/>
+    <title>
+        Merge PR #5807 from @swachchhanda000 - Add regression test for wmic r…
+    </title>
+    <updated>2026-06-24T16:17:22Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/87493836?s=30&amp;v=4"/>
+    <author>
+      <name>swachchhanda000</name>
+      <uri>https://github.com/swachchhanda000</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;Merge PR #5807 from @swachchhanda000 - Add regression test for wmic related rules
+
+chore: add regression test for wmic related rules
+fix: Process Reconnaissance Via Wmic.EXE- filter usage of &amp;#39;call terminate&amp;#39;
+fix: Potential Product Reconnaissance Via Wmic.EXE - filter csproduct
+fix: Service Reconnaissance Via Wmic.EXE - filter stopservice and startservice
+
+---------
+
+Co-authored-by: Mohamed Ashraf &amp;lt;47338567+X-Junior@users.noreply.github.com&amp;gt;
+Co-authored-by: Nasreddine Bencherchali &amp;lt;monsteroffire2@gmail.com&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+</feed>

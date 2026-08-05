@@ -1,0 +1,279 @@
+____________________________________
+
+Name: ARCustom
+Description: 
+Owner:Telefónica Móviles Argentina
+Created by: nombre.apellido@Tmoviles.com.ar 
+Status
+Risk : (Critical Risk, High Risk, Medium Risk, Low Risk, Unknown)
+MITRE ATT&CK
+Clients: 83022506 (Telefónica Móviles Argentina)
+83022506
+Operating systems: Windows
+Add this information to each generated signal: Columns (agregar todas)
+
+_____________________________________
+
+Type: ProcessOps
+Datos de Condition: 
+
+ChildFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ChildMd5 (equals) VALOR.
+
+ChildPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+CommandLine (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Muid (equals) VALOR.
+
+Operation (>, <, ==, <=, =<) (CreateProc (0), PECreat (1), PEModif (2), LibraryLoad (3), Svcinst (4), PEMapWrite (5), PEDelete (6), PERename (7), DirCreate(8), CMPCreat (9), CMOpened (10), RegkExeCreat (11), RegkExeModif (12), PENeverSeen (15), RemoteThreadCreated (17), Processkilled (18), SamAccess (25), MonitoredOpen (26), ExploitVBS (27), ExploitPython (28), ExploitRuby (29),  ExploitSniffer (30), ExploitWSAStartup (31), ExploitinternetReadFile (32), Monitored Registry (33), 
+DeepHardeningFileOpenedByMonitored Process (35), DeepHardeningFileFromOutside (36), EndProcess (38), Load16bitsFilesByNtvm (39), Heuhooks (43), DLPCopy (44), DLPPaste (45), OpenFileInMac (52), OpenFileInLinux (53), CreateProcessByWmi (54), StopProtection (55), OpenProcessLSASS (61), LoadDrvVulnerable (89), MitreReadComplete (200), MitreCreateFile (201), MitreCreateFile (201) MitreModifyFile (202), LoadDriver (207),NOPEDeleted (208), DirDelete (210))
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentMd5 (equals) VALOR.
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPid (>, <, ==, <=, =<) VALOR.
+
+ParentStatus (>, <, ==, <=, =<) VALOR.
+
+ChildClassification (>, <, ==, <=, =<) VALOR.
+
+Key (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Value (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ValueData (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+_____________________________________________________________
+
+Type: NetworkOps
+Datos de Condition: 
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentMd5 (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Direction (>, <, ==, <=, =<) VALOR.
+
+Hostname (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LocalIp (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LocalPort (>, <, ==, <=, =<) VALOR.
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Muid (equals) VALOR.
+
+Protocol (>, <, ==, <=, =<) VALOR.
+
+RemoteIp (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+IPV4Status (>, <, ==, <=, =<) VALOR.
+
+RemotePort (>, <, ==, <=, =<) VALOR.
+
+Times (>, <, ==, <=, =<) VALOR.
+
+___________________________________________________________________________
+
+Type: Download
+Datos de Condition:
+
+ChildFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ChildMd5 (equals) VALOR.
+
+ChildPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ChildUrl (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Muid (equals) VALOR.
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentMd5 (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+_______________________________________________________________________
+
+
+Type: DnsOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+ParentMd5 (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentCount (>, <, ==, <=, =<) VALOR.
+
+FailedQueries (>, <, ==, <=, =<) VALOR.
+
+QueriedDomainCount (>, <, ==, <=, =<) VALOR.
+
+DomainList (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+
+_______________________________________________________________________
+
+
+Type: RemediationOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+ChildFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ChildMd5 (equals) VALOR.
+
+ChildPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+CommandLine (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentMd5 (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteIp (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteMachineName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteUsername (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Action (>, <, ==, <=, =<) VALOR.
+
+DetectionId (>, <, ==, <=, =<) VALOR.
+
+WinningTech (>, <, ==, <=, =<) VALOR.
+_______________________________________________________________________
+
+Type: SystemOps
+Datos de Condition: 
+
+ChildMd5 (equals) VALOR.
+
+CommandLine (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Hostname (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteIp (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteMachineName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+IsSessionInteractive (>, <, ==, <=, =<) VALOR.
+
+ExtendedInfo (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+IsLocal (>, <, ==, <=, =<) VALOR.
+
+_______________________________________________________________________
+
+Type: LoginOutOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemoteIp (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+RemotePort (>, <, ==, <=, =<) VALOR.
+
+RemoteMachineName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Type (>, <, ==, <=, =<) VALOR.
+
+IsSessionInteractive (>, <, ==, <=, =<) VALOR.
+
+SessionType (>, <, ==, <=, =<) VALOR.
+
+ErrCode (>, <, ==, <=, =<) VALOR.
+
+_______________________________________________________________________
+
+Type: RegistryOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentMd5 (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPid (>, <, ==, <=, =<) VALOR.
+
+RegistryAction (>, <, ==, <=, =<) VALOR.
+
+Key (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Value (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ValueData (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ValueDataLength (>, <, ==, <=, =<) VALOR.
+
+_______________________________________________________________
+
+Type: DeviceOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+DeviceType (>, <, ==, <=, =<) VALOR.
+
+IsDenied (>, <, ==, <=, =<) VALOR.
+
+IdName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+FriendlyName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Description (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+Manufacturer (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+PhoneDescription (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+_______________________________________________________________
+
+Type: DeviceOps
+Datos de Condition: 
+
+Muid (equals) VALOR.
+
+ParentPid (>, <, ==, <=, =<) VALOR.
+
+ParentFileName (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+ParentPath (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+LoggedUser (containsAny, containsInOrder, equals,endsWithAny,startsWithAny, matches) VALOR (Case insensitive, Sensible a mayusculas y minúsculas).
+
+BytesSent (>, <, ==, <=, =<) VALOR.
+
+BytesReceived (>, <, ==, <=, =<) VALOR.
+
+
+===============================================
