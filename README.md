@@ -37,7 +37,10 @@ No necesita que nadie escriba la regla a mano: Sigma es un "idioma" genérico pa
 
 | Archivo | Para qué sirve |
 |---|---|
-| `sigma2orion.py` | El programa en sí. Es el único que hay que ejecutar. |
+| `sigma2orion.py` | Version **a demanda**: hace una sola revision de reglas nuevas y termina. Para correrlo manualmente o dispararlo desde un cron externo. |
+| `sigma2orion_service.py` | Version **servicio**: queda corriendo indefinidamente, revisando cada cierto tiempo (configurable). Para dejarlo como agente en segundo plano. |
+| `sigma2orion_core.py` | El motor con toda la logica de traduccion (descarga de Sigma, mapeo de campos, generacion de reglas Orion, logging, estadisticas). Los dos scripts de arriba lo usan; no se ejecuta directamente. |
+| `sigma2orion.service` | Archivo de ejemplo para registrar `sigma2orion_service.py` como servicio de `systemd` en Linux, para que arranque solo y se reinicie si falla. |
 | `orion.txt` | El "diccionario de referencia": muestra qué campos y operadores existen en Orion para cada tipo de evento (`ProcessOps`, `NetworkOps`, `DnsOps`, etc.) y el formato exacto del encabezado que Orion espera. El programador lo usó como base para armar las tablas de traducción dentro del código; el script **no lo lee en cada ejecución**, ya está "copiado" dentro del código. |
 | `last_sha.txt` | Una libreta de un solo renglón donde el script anota el último cambio (commit) de Sigma que ya procesó. Así, la próxima vez que se ejecute, no vuelve a mirar cambios viejos. |
 | `windows.atom` | Es una copia de ejemplo del feed de cambios de GitHub que quedó guardada en la carpeta. El script **no usa este archivo**: en cada ejecución baja la versión más actual directamente desde GitHub por internet. |
@@ -45,8 +48,46 @@ No necesita que nadie escriba la regla a mano: Sigma es un "idioma" genérico pa
 | `sigma2orion.log` | **Log de funcionamiento**. Registro detallado de cada paso de cada corrida: qué commit se procesó, qué regla se creó, qué campos se ignoraron por no tener equivalencia Sigma → Orion, y qué errores de red (timeouts, sin conexión) ocurrieron. Se va agregando en cada ejecución. |
 | `rules_stats.jsonl` | Una línea por cada regla procesada (formato JSON), con fecha, commit, archivo y resultado (`created`, `discarded_fp`, `no_orion_type` o `error`). Es la base de datos que usa `stats.py` para armar las estadísticas. |
 | `stats.py` | Script aparte que lee `rules_stats.jsonl` y muestra cuántas reglas se crearon por mes y por año. |
-| `.env` | Archivo local (no se sube al repo) donde se guarda la clave real de VirusTotal, en la variable `VT_API_KEY`. |
-| `.env_ejemplo` | Versión de ejemplo de `.env`, sin clave real, para saber qué variable hay que completar. |
+| `.env` | Archivo local (no se sube al repo) donde se guarda la clave real de VirusTotal (`VT_API_KEY`) y el intervalo de revisión (`CHECK_INTERVAL_MINUTES`). |
+| `.env_ejemplo` | Versión de ejemplo de `.env`, sin clave real, para saber qué variables hay que completar. |
+
+---
+
+## Dos formas de correrlo
+
+### A demanda (`sigma2orion.py`)
+
+Hace una sola revisión de reglas nuevas y termina. Es la forma más simple, ideal para probar a mano o para dispararlo desde un cron/tarea programada externa:
+
+```bash
+python3 sigma2orion.py
+```
+
+### Como servicio continuo (`sigma2orion_service.py`)
+
+Queda corriendo indefinidamente: revisa una vez, espera el intervalo configurado y vuelve a revisar, sin necesidad de cron.
+
+```bash
+python3 sigma2orion_service.py
+```
+
+- El intervalo de espera entre revisiones se configura con `CHECK_INTERVAL_MINUTES` en el `.env` (por defecto 60 minutos si no está definida o tiene un valor inválido).
+- Se detiene de forma prolija al recibir `Ctrl+C` o una señal `SIGTERM` (por ejemplo, al hacer `systemctl stop`): termina la corrida en curso y no arranca una nueva.
+- Si una corrida falla por un error inesperado, se registra en `sigma2orion.log` y el bucle sigue en el próximo ciclo (el servicio no se cae).
+
+### Dejarlo como servicio de systemd (Linux)
+
+1. Copiar `sigma2orion.service` a `/etc/systemd/system/sigma2orion.service` y editar `WorkingDirectory`, `ExecStart` y `User` con la ruta y el usuario reales.
+2. Habilitarlo y arrancarlo:
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now sigma2orion.service
+   ```
+3. Ver el estado y los logs:
+   ```bash
+   systemctl status sigma2orion.service
+   journalctl -u sigma2orion.service -f
+   ```
 
 ---
 

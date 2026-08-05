@@ -1,0 +1,15 @@
+[Unit]
+Description=Sigma2Orion - traductor de reglas Sigma a Orion (servicio continuo)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/ruta/a/Sigma2Orion
+ExecStart=/usr/bin/python3 /ruta/a/Sigma2Orion/sigma2orion_service.py
+Restart=on-failure
+RestartSec=30
+User=tu_usuario
+
+[Install]
+WantedBy=multi-user.target
