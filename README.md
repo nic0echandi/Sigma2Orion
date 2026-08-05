@@ -42,8 +42,34 @@ No necesita que nadie escriba la regla a mano: Sigma es un "idioma" genérico pa
 | `last_sha.txt` | Una libreta de un solo renglón donde el script anota el último cambio (commit) de Sigma que ya procesó. Así, la próxima vez que se ejecute, no vuelve a mirar cambios viejos. |
 | `windows.atom` | Es una copia de ejemplo del feed de cambios de GitHub que quedó guardada en la carpeta. El script **no usa este archivo**: en cada ejecución baja la versión más actual directamente desde GitHub por internet. |
 | `orion_rules.txt` | El archivo de **salida**. Cada vez que el script procesa una regla, le agrega un nuevo bloque al final (no borra lo anterior). Es el archivo que el operador debe abrir para copiar las reglas listas para Orion. |
+| `sigma2orion.log` | **Log de funcionamiento**. Registro detallado de cada paso de cada corrida: qué commit se procesó, qué regla se creó, qué campos se ignoraron por no tener equivalencia Sigma → Orion, y qué errores de red (timeouts, sin conexión) ocurrieron. Se va agregando en cada ejecución. |
+| `rules_stats.jsonl` | Una línea por cada regla procesada (formato JSON), con fecha, commit, archivo y resultado (`created`, `discarded_fp`, `no_orion_type` o `error`). Es la base de datos que usa `stats.py` para armar las estadísticas. |
+| `stats.py` | Script aparte que lee `rules_stats.jsonl` y muestra cuántas reglas se crearon por mes y por año. |
 | `.env` | Archivo local (no se sube al repo) donde se guarda la clave real de VirusTotal, en la variable `VT_API_KEY`. |
 | `.env_ejemplo` | Versión de ejemplo de `.env`, sin clave real, para saber qué variable hay que completar. |
+
+---
+
+## Manejo de errores de red
+
+Toda descarga desde GitHub o VirusTotal pasa por `http_get`, que ahora:
+- Espera como máximo 20 segundos por respuesta (timeout) antes de darla por perdida.
+- Si falla (sin conexión, timeout, error del servidor), reintenta hasta 3 veces con una pausa creciente entre intentos.
+- Si después de los 3 intentos sigue sin poder conectar, registra el error en `sigma2orion.log` y **omite ese commit o esa regla** en vez de cortar toda la ejecución (salvo que falle la primera consulta al feed de commits, en cuyo caso el script termina porque no tiene nada para procesar).
+
+## Log de funcionamiento
+
+Cada corrida queda registrada en `sigma2orion.log` (y también se imprime en pantalla), con una línea por paso importante: commit en proceso, regla creada, regla descartada por riesgo de falso positivo, categoría sin equivalente en Orion, y **cada campo Sigma que se ignoró por no tener mapeo a un campo de Orion**.
+
+## Estadísticas de uso
+
+Para ver cuántas reglas se generaron por mes y por año:
+
+```bash
+python3 stats.py            # solo reglas creadas, por mes y por año
+python3 stats.py --all      # incluye también descartadas, sin tipo y con error
+python3 stats.py --year 2026
+```
 
 ---
 

@@ -1,7 +1,24 @@
     #!/usr/bin/env python3
-import re, sys, json, urllib.request, os, time, random
+import re, sys, json, urllib.request, os, time, random, socket, logging
+from urllib.error import URLError, HTTPError
 from datetime import datetime
 import yaml
+
+LOG_FILE = "sigma2orion.log"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE, encoding="utf-8"),
+        logging.StreamHandler(sys.stdout),
+    ],
+)
+log = logging.getLogger("sigma2orion")
+
+HTTP_TIMEOUT = 20  # segundos de espera antes de considerar timeout
+HTTP_RETRIES = 3
+HTTP_BACKOFF = 5  # segundos, se multiplica por el numero de intento
 
 
 def load_dotenv(path=".env"):
@@ -28,6 +45,7 @@ API_COMMIT = "https://api.github.com/repos/SigmaHQ/sigma/commits/{sha}"
 RAW_URL = "https://raw.githubusercontent.com/SigmaHQ/sigma/{sha}/{path}"
 STATE_FILE = "last_sha.txt"
 OUTPUT_FILE = "orion_rules.txt"
+STATS_FILE = "rules_stats.jsonl"
 
 
 def new_rule_id():
@@ -37,6 +55,20 @@ def new_rule_id():
 def append_output(text):
     with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
         f.write(text + "\n")
+
+
+def log_rule_stats(status, sha, path, name="", rule_id=""):
+    # una linea JSON por regla procesada, para poder sacar estadisticas despues (ver stats.py)
+    record = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "status": status,  # created | discarded_fp | no_orion_type | error
+        "sha": sha,
+        "path": path,
+        "name": name,
+        "rule_id": rule_id,
+    }
+    with open(STATS_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 CATEGORY_TO_TYPE = {
     "process_creation": "ProcessOps",
@@ -99,16 +131,25 @@ def mitre_from_tags(tags):
 
 
 def http_get(url, headers=None):
-    req = urllib.request.Request(url, headers=headers or {"User-Agent": "sigma2orion"})
-    with urllib.request.urlopen(req) as r:
-        return r.read()
+    last_exc = None
+    for attempt in range(1, HTTP_RETRIES + 1):
+        try:
+            req = urllib.request.Request(url, headers=headers or {"User-Agent": "sigma2orion"})
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as r:
+                return r.read()
+        except (URLError, HTTPError, socket.timeout, ConnectionError) as exc:
+            last_exc = exc
+            log.warning(f"Fallo de red al pedir {url} (intento {attempt}/{HTTP_RETRIES}): {exc}")
+            if attempt < HTTP_RETRIES:
+                time.sleep(HTTP_BACKOFF * attempt)
+    raise ConnectionError(f"No se pudo conectar a {url} tras {HTTP_RETRIES} intentos: {last_exc}")
 
 
 def commit_shas():
     atom = http_get(ATOM_URL).decode("utf-8", "ignore")
     shas = re.findall(r'href="https://github\.com/SigmaHQ/sigma/commit/([a-f0-9]+)"', atom)
     if not shas:
-        sys.exit("no se encontro ningun commit en el atom feed")
+        raise RuntimeError("no se encontro ningun commit en el atom feed")
     return shas  # orden: mas nuevo primero
 
 
@@ -135,7 +176,7 @@ def changed_windows_rules(sha):
     return files
 
 
-def block_lines(block, fmap, vt_covered=frozenset()):
+def block_lines(block, fmap, vt_covered=frozenset(), context=""):
     lines = []
     for key, value in block.items():
         if "|" in key:
@@ -144,6 +185,7 @@ def block_lines(block, fmap, vt_covered=frozenset()):
             field, modifier = key, None
         orion_field = fmap.get(field)
         if orion_field is None:
+            log.info(f"{context}campo sigma '{field}' sin equivalencia en Orion, se omite")
             continue  # sin mapeo -> se omite
         op = MOD_TO_OP.get(modifier, modifier or "equals")
         values = value if isinstance(value, list) else [value]
@@ -151,8 +193,10 @@ def block_lines(block, fmap, vt_covered=frozenset()):
             if field in DOMAIN_SIGMA_FIELDS:
                 vclean = str(v).lstrip("*.").rstrip("*")
                 if vclean.count(".") != 1:
+                    log.info(f"{context}dominio '{v}' ignorado (el EDR solo matchea dominios de 2 labels)")
                     continue  # EDR solo matchea dominios de 2 labels (ej: monero.us, no monero.us.to)
                 if vclean in vt_covered:
+                    log.info(f"{context}dominio '{vclean}' omitido, ya bloqueado por Panda segun VT")
                     continue  # ya bloqueado por Panda segun VT
             lines.append(f"  {orion_field} ({op}) {v}")
     return lines
@@ -183,7 +227,7 @@ def cleanup(lines):
     return result
 
 
-def render_condition(condition, detection, fmap, vt_covered=frozenset()):
+def render_condition(condition, detection, fmap, vt_covered=frozenset(), context=""):
     condition = expand_condition(condition, detection)
     out = []
     for tok in tokenize(condition):
@@ -195,14 +239,15 @@ def render_condition(condition, detection, fmap, vt_covered=frozenset()):
         else:
             block = detection.get(tok)
             if block is None:
+                log.info(f"{context}bloque de deteccion '{tok}' no encontrado, se ignora en la condicion")
                 continue
             if isinstance(block, list):
                 for i, sub in enumerate(block):
                     if i > 0:
                         out.append("OR")
-                    out.extend(block_lines(sub, fmap, vt_covered))
+                    out.extend(block_lines(sub, fmap, vt_covered, context))
             else:
-                out.extend(block_lines(block, fmap, vt_covered))
+                out.extend(block_lines(block, fmap, vt_covered, context))
     return cleanup(out)
 
 
@@ -232,9 +277,10 @@ def vt_panda_flags(domain):
         headers={"x-apikey": VT_API_KEY},
     )
     try:
-        with urllib.request.urlopen(req) as r:
+        with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as r:
             data = json.loads(r.read())
-    except Exception:
+    except (URLError, HTTPError, socket.timeout, ConnectionError) as exc:
+        log.warning(f"No se pudo consultar VirusTotal para el dominio '{domain}': {exc}")
         return None  # no se pudo consultar
     results = data.get("data", {}).get("attributes", {}).get("last_analysis_results", {})
     panda = results.get("Panda")
@@ -269,7 +315,16 @@ def fp_warning(rule):
 
 
 def process_rule(path, sha):
-    raw = http_get(RAW_URL.format(sha=sha, path=path)).decode("utf-8", "ignore")
+    context = f"[{path}] "
+    log.info(f"{context}iniciando procesamiento (commit {sha})")
+
+    try:
+        raw = http_get(RAW_URL.format(sha=sha, path=path)).decode("utf-8", "ignore")
+    except ConnectionError as exc:
+        log.error(f"{context}no se pudo descargar la regla, se omite: {exc}")
+        log_rule_stats("error", sha, path)
+        return
+
     rule = yaml.safe_load(raw)
     logsource = rule.get("logsource", {})
     category = logsource.get("category", "")
@@ -288,6 +343,7 @@ def process_rule(path, sha):
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if fp_reasons:
+        log.info(f"{context}descartada por riesgo de falso positivo: {' | '.join(fp_reasons)}")
         block = []
         block.append("____________________________________\n")
         block.append(f"ID: {rule_id} | Generado: {generated_at}")
@@ -295,6 +351,7 @@ def process_rule(path, sha):
         block.append(f"[!] Descartada, riesgo de FP: {' | '.join(fp_reasons)}")
         block.append("_____________________________________________________________\n")
         append_output("\n".join(block))
+        log_rule_stats("discarded_fp", sha, path, name, rule_id)
         return
 
     out = []
@@ -316,9 +373,11 @@ def process_rule(path, sha):
     out.append(f"Condition sigma original: {condition}")
 
     if not orion_type:
+        log.info(f"{context}categoria sigma '{category}' sin Type equivalente en Orion")
         out.append("[!] Categoria sigma sin Type equivalente en Orion, no se puede cargar directo.")
         out.append("_____________________________________________________________\n")
         append_output("\n".join(out))
+        log_rule_stats("no_orion_type", sha, path, name, rule_id)
         return
 
     out.append("")
@@ -326,40 +385,56 @@ def process_rule(path, sha):
     if vt_covered:
         out.append(f"[i] Omitidos (ya bloqueados por Panda segun VT): {', '.join(sorted(vt_covered))}")
     out.append("Datos de Condition:")
-    out.extend(render_condition(condition, detection, fmap, vt_covered))
+    out.extend(render_condition(condition, detection, fmap, vt_covered, context))
     out.append("")
     out.append("_____________________________________________________________\n")
 
     append_output("\n".join(out))
+    log.info(f"{context}regla creada correctamente (ID {rule_id}, Type {orion_type})")
+    log_rule_stats("created", sha, path, name, rule_id)
 
 
 def main():
-    shas = commit_shas()  # mas nuevo primero
+    try:
+        shas = commit_shas()  # mas nuevo primero
+    except (ConnectionError, RuntimeError) as exc:
+        log.error(f"No se pudo obtener la lista de commits desde GitHub: {exc}")
+        sys.exit(1)
+
     last_sha = read_last_sha()
 
     if last_sha is None:
         pending = [shas[0]]  # primera corrida: solo el ultimo commit
-        print("Primera corrida, no habia sha guardado.\n")
+        log.info("Primera corrida, no habia sha guardado.")
     elif last_sha in shas:
         idx = shas.index(last_sha)
         pending = list(reversed(shas[:idx]))  # nuevos, del mas viejo al mas nuevo
         if not pending:
-            print("No hay commits nuevos desde la ultima corrida.")
+            log.info("No hay commits nuevos desde la ultima corrida.")
             return
     else:
         pending = [shas[0]]  # last_sha muy viejo / fuera del feed
-        print(f"Ultimo sha guardado ({last_sha}) no esta en el feed actual, tomo solo el ultimo commit.\n")
+        log.info(f"Ultimo sha guardado ({last_sha}) no esta en el feed actual, tomo solo el ultimo commit.")
 
     for sha in pending:
-        print(f"Procesando commit: {sha}\n")
-        files = changed_windows_rules(sha)
+        log.info(f"Procesando commit: {sha}")
+        try:
+            files = changed_windows_rules(sha)
+        except ConnectionError as exc:
+            log.error(f"No se pudo obtener los archivos del commit {sha}, se omite: {exc}")
+            continue
         if not files:
-            print("Este commit no modifico/agrego reglas .yml en rules/windows.\n")
+            log.info("Este commit no modifico/agrego reglas .yml en rules/windows.")
             continue
         for path in files:
-            process_rule(path, sha)
+            try:
+                process_rule(path, sha)
+            except Exception as exc:
+                log.error(f"Error inesperado procesando {path} (commit {sha}), se omite: {exc}")
+                log_rule_stats("error", sha, path)
 
     write_last_sha(shas[0])
+    log.info("Corrida finalizada.")
 
 
 if __name__ == "__main__":
