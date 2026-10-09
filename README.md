@@ -185,7 +185,7 @@ Por cada regla nueva de Windows que Sigma publique y que sea traducible, se agre
 ID: 04821573 | Generado: 2026-08-05 12:40:11
 Name: ARCustomNombreDeLaRegla
 Description: ...
-Owner:Telefónica Móviles Argentina
+Owner:Nic0 Echandi
 ...
 Type: ProcessOps
 Datos de Condition:

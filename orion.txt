@@ -6,8 +6,8 @@ Created by: Operaciones de Ciberseguridad
 Status
 Risk : (Critical Risk, High Risk, Medium Risk, Low Risk, Unknown)
 MITRE ATT&CK
-Clients: 83022506 (Telefónica Móviles Argentina)
-83022506
+Clients: xxxxx (Numero de cliente de la Organizacion)
+xxxxx
 Operating systems: Windows
 Add this information to each generated signal: Columns (agregar todas)
 
